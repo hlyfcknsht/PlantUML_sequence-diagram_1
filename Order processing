@@ -1,0 +1,20 @@
+@startuml
+box "Подача заказа"
+  actor "Клиент" as client
+  participant "Мобильное приложение" as app
+box end
+box "Обработка заказа"
+  control "Сервис заказов" as orderService
+  database "База данных заказов" as dbOrders
+box end
+box "Доставка"
+  participant "Курьер" as courier
+box end
+client -> app: Оформление заказа
+activate app
+app -> orderService: Отправка данных заказа
+orderService -> dbOrders: Сохранение заказа
+dbOrders -->> orderService: Подтверждение сохранения
+orderService -> courier: Назначение курьера
+courier -->> client: Доставка заказа
+@enduml
